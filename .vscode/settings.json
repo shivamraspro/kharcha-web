@@ -18,5 +18,17 @@
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#0b4f4a99",
     "titleBar.inactiveForeground": "#e7e7e799"
-  }
+  },
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "editor.rulers": [80, 100, 120],
 }
