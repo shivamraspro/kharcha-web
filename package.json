@@ -7,7 +7,13 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "tsc": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pcc": "pnpm tsc && pnpm lint:fix",
+    "pcca": "pnpm tsc && pnpm lint:fix && git add -A",
+    "setup-husky": "husky"
   },
   "dependencies": {
     "@nuxt/eslint": "1.7.1",
@@ -17,5 +23,8 @@
     "typescript": "^5.9.2",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }
