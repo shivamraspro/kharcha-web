@@ -11,7 +11,7 @@
     "tsc": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "pcc": "pnpm tsc && pnpm lint:fix",
+    "pcc": "pnpm tsc && pnpm lint",
     "pcca": "pnpm tsc && pnpm lint:fix && git add -A",
     "setup-husky": "husky"
   },
