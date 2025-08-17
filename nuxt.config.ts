@@ -2,8 +2,13 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui'],
   devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: '',
+    },
+  },
   devServer: {
-    port: 5050,
+    port: parseInt(process.env.PORT!),
   },
   compatibilityDate: '2025-07-15',
   eslint: {
