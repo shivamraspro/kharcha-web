@@ -6,7 +6,6 @@ const formState = reactive({
   name: '',
   email: '',
   password: '',
-  confirmPassword: '',
 });
 
 const formSchema = v.pipe(
@@ -24,33 +23,24 @@ const formSchema = v.pipe(
       v.regex(/[^a-zA-Z0-9\s]/, 'Password must contain at least one special character'),
       v.regex(/^\S*$/, 'Password must not contain whitespace'),
     ),
-    confirmPassword: v.pipe(
-      v.string(),
-      v.trim(),
-      v.minLength(8, 'Password must be at least 8 characters long'),
-      v.maxLength(48, 'Password must be at most 48 characters long'),
-      v.regex(/[a-z]+/, 'Password must contain at least one lowercase letter'),
-      v.regex(/[A-Z]+/, 'Password must contain at least one uppercase letter'),
-      v.regex(/\d+/, 'Password must contain at least one digit'),
-      v.regex(/[^a-zA-Z0-9\s]/, 'Password must contain at least one special character'),
-      v.regex(/^\S*$/, 'Password must not contain whitespace'),
-    ),
   }),
-  v.forward(
-    v.partialCheck(
-      [['password'], ['confirmPassword']],
-      (data) => data.password === data.confirmPassword,
-      'Passwords do not match',
-    ),
-    ['confirmPassword'],
-  ),
 );
 
 type FormSchema = v.InferOutput<typeof formSchema>;
 
-const onSubmit = (event: FormSubmitEvent<FormSchema>) => {
-  // Handle form submission
-  console.log(event);
+const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
+  try {
+    const newUser: { email: string; name: string; uuid: string }
+      = await $fetch(`${useRuntimeConfig().public.apiBaseUrl}/auth/signup`, {
+        method: 'POST',
+        body: event.data,
+      });
+    if (newUser && newUser.uuid) {
+      navigateTo('/login');
+    }
+  } catch (error) {
+    console.error('Error during signup:', error);
+  }
 };
 </script>
 
@@ -77,9 +67,6 @@ const onSubmit = (event: FormSubmitEvent<FormSchema>) => {
       </UFormField>
       <UFormField label="Password" name="password">
         <UInputPassword v-model="formState.password" class="w-full" />
-      </UFormField>
-      <UFormField label="Confirm Password" name="confirmPassword">
-        <UInputPassword v-model="formState.confirmPassword" class="w-full" />
       </UFormField>
       <UButton
         type="submit"

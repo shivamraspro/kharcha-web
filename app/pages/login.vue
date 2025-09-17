@@ -24,9 +24,19 @@ const formSchema = v.object({
 
 type FormSchema = v.InferOutput<typeof formSchema>;
 
-const onSubmit = (event: FormSubmitEvent<FormSchema>) => {
-  // Handle form submission
-  console.log(event);
+const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
+  try {
+    const loggedInUser: { accessToken: string }
+      = await $fetch(`${useRuntimeConfig().public.apiBaseUrl}/auth/login`, {
+        method: 'POST',
+        body: event.data,
+      });
+    if (loggedInUser && loggedInUser.accessToken) {
+      navigateTo('/');
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+  }
 };
 </script>
 
