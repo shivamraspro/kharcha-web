@@ -27,11 +27,12 @@ const formSchema = v.pipe(
 );
 
 type FormSchema = v.InferOutput<typeof formSchema>;
+const runtimeConfig = useRuntimeConfig();
 
 const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
   try {
     const newUser: { email: string; name: string; uuid: string }
-      = await $fetch(`${useRuntimeConfig().public.apiBaseUrl}/auth/signup`, {
+      = await $fetch(`${runtimeConfig.public.apiBaseUrl}/auth/signup`, {
         method: 'POST',
         body: event.data,
       });

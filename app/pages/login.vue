@@ -23,17 +23,16 @@ const formSchema = v.object({
 });
 
 type FormSchema = v.InferOutput<typeof formSchema>;
+const runtimeConfig = useRuntimeConfig();
 
 const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
   try {
-    const loggedInUser: { accessToken: string }
-      = await $fetch(`${useRuntimeConfig().public.apiBaseUrl}/auth/login`, {
-        method: 'POST',
-        body: event.data,
-      });
-    if (loggedInUser && loggedInUser.accessToken) {
-      navigateTo('/');
-    }
+    await $fetch(`${runtimeConfig.public.apiBaseUrl}/auth/login`, {
+      method: 'POST',
+      body: event.data,
+      credentials: 'include',
+    });
+    navigateTo('/');
   } catch (error) {
     console.error('Error during login:', error);
   }
@@ -61,7 +60,7 @@ const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
       <UButton
         type="submit"
       >
-        Sign Up
+        Log In
       </UButton>
     </UForm>
   </div>
