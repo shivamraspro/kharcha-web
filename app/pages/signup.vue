@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import * as v from 'valibot';
-import type { FormSubmitEvent } from '@nuxt/ui';
+import * as v from 'valibot'
+import type { FormSubmitEvent } from '@nuxt/ui'
 
 const formState = reactive({
   name: '',
   email: '',
   password: '',
-});
+})
 
 const formSchema = v.pipe(
   v.object({
@@ -20,32 +20,37 @@ const formSchema = v.pipe(
       v.regex(/[a-z]+/, 'Password must contain at least one lowercase letter'),
       v.regex(/[A-Z]+/, 'Password must contain at least one uppercase letter'),
       v.regex(/\d+/, 'Password must contain at least one digit'),
-      v.regex(/[^a-zA-Z0-9\s]/, 'Password must contain at least one special character'),
+      v.regex(
+        /[^a-zA-Z0-9\s]/,
+        'Password must contain at least one special character',
+      ),
       v.regex(/^\S*$/, 'Password must not contain whitespace'),
     ),
   }),
-);
+)
 
-type FormSchema = v.InferOutput<typeof formSchema>;
+type FormSchema = v.InferOutput<typeof formSchema>
 
 const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
   try {
-    const newUser: { email: string; name: string; uuid: string }
-      = await $fetch(`${useRuntimeConfig().public.apiBaseUrl}/auth/signup`, {
+    const newUser: { email: string; name: string; uuid: string } = await $fetch(
+      `${useRuntimeConfig().public.apiBaseUrl}/auth/signup`,
+      {
         method: 'POST',
         body: event.data,
-      });
+      },
+    )
     if (newUser && newUser.uuid) {
-      navigateTo('/login');
+      navigateTo('/login')
     }
   } catch (error) {
-    console.error('Error during signup:', error);
+    console.error('Error during signup:', error)
   }
-};
+}
 </script>
 
 <template>
-  <div class="flex justify-center items-center h-screen">
+  <div class="flex h-screen items-center justify-center">
     <UForm
       :schema="formSchema"
       :state="formState"
@@ -53,26 +58,15 @@ const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
       @submit="onSubmit"
     >
       <UFormField label="Full Name" name="name">
-        <UInput
-          v-model="formState.name"
-          class="w-full"
-        />
+        <UInput v-model="formState.name" class="w-full" />
       </UFormField>
       <UFormField label="Email" name="email">
-        <UInput
-          v-model="formState.email"
-          type="email"
-          class="w-full"
-        />
+        <UInput v-model="formState.email" type="email" class="w-full" />
       </UFormField>
       <UFormField label="Password" name="password">
         <UInputPassword v-model="formState.password" class="w-full" />
       </UFormField>
-      <UButton
-        type="submit"
-      >
-        Sign Up
-      </UButton>
+      <UButton type="submit"> Sign Up </UButton>
     </UForm>
   </div>
 </template>

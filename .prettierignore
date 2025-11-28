@@ -1,0 +1,22 @@
+# Build outputs
+.nuxt
+.output
+dist
+
+# Logs
+*.log
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Package managers
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Support files
+.vscode
+.idea
+.DS_Store
