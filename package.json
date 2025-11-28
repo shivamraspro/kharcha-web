@@ -8,11 +8,13 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "tsc": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "pcc": "pnpm tsc && pnpm lint",
-    "pcca": "pnpm tsc && pnpm lint:fix && git add -A",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "pcc": "pnpm format:check && pnpm typecheck && pnpm lint",
+    "pcca": "pnpm format && pnpm typecheck && pnpm lint:fix && git add -A",
     "setup-husky": "husky"
   },
   "dependencies": {
@@ -25,7 +27,10 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.11.0",
     "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
+    "prettier": "^3.7.1",
+    "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   }

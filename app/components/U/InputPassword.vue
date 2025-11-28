@@ -1,17 +1,14 @@
 <script lang="ts" setup>
 defineOptions({
   inheritAttrs: false,
-});
+})
 
-const showPassword = ref(false);
-const slots = useSlots();
+const showPassword = ref(false)
+const slots = useSlots()
 </script>
 
 <template>
-  <UInput
-    v-bind="$attrs"
-    :type="showPassword ? 'text' : 'password'"
-  >
+  <UInput v-bind="$attrs" :type="showPassword ? 'text' : 'password'">
     <template v-if="slots.leading" #leading>
       <slot name="leading" />
     </template>

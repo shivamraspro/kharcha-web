@@ -1,5 +1,6 @@
 // @ts-check
-import withNuxt from './.nuxt/eslint.config.mjs';
+import withNuxt from './.nuxt/eslint.config.mjs'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default withNuxt(
   // Your custom configs here
@@ -7,10 +8,13 @@ export default withNuxt(
     {
       files: ['app/**/*.vue'],
       rules: {
-        'vue/max-attributes-per-line': ['warn', {
-          singleline: 3,
-          multiline: 1,
-        }],
+        'vue/max-attributes-per-line': [
+          'warn',
+          {
+            singleline: 3,
+            multiline: 1,
+          },
+        ],
 
         'no-console': [
           'warn',
@@ -20,6 +24,6 @@ export default withNuxt(
         ],
       },
     },
+    eslintConfigPrettier,
   ],
-
-);
+)
